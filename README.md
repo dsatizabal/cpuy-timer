@@ -39,7 +39,7 @@ Run:
 make synth_timer
 ```
 
-and you should see a YoSys window opening showing the synthesis like this:
+and you should see a YoSys window opening showing the synthesis like this (as per 10Nov2023 this looks pretty weird):
 
 ![Timer module synthesis with YoSys](./img/synth.png "Timer YoSys Synthesis")
 
@@ -68,6 +68,8 @@ a GtkWave window will open, you should see the hierarchy of the timer containing
 ![GtkWave results for timer module](./img/gtkwave.png "GtkWave: timer module")
 
 observe that for this case we're not using a verilog testbench but rather we're testing directly (Design Under Test or DUT for CocoTB) the corresponding modules.
+
+As per 10Nov2023 the timer is having a malfunction that detects the overflow with a clock cycle delay.
 
 ## Running Formal Verification:
 
