@@ -1,0 +1,18 @@
+[tasks]
+cover
+
+[options]
+cover: mode cover
+cover: depth 120
+
+[engines]
+smtbmc
+
+[script]
+read_verilog -formal timer.v
+prep -top timer
+
+[files]
+counter.v
+timer.v
+
