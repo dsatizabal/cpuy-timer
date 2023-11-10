@@ -1,4 +1,4 @@
-# Very simple Verilog 7-segments counter
+# Simple 16-bits timer peripheral
 
 Implements a time that can be used as a peripheral for a CPU implementation, intended to be used in a simple 8-bits CPU implementation to be sent for Tapeout with the [Dec 2023 Efabless shuttle](https://efabless.com/gf-180-open-mpw-shuttle-program)
 
