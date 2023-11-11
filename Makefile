@@ -1,6 +1,6 @@
 # cocotb setup
-MODULE = test
-TOPLEVEL = time
+MODULE = timer
+TOPLEVEL = timer
 VERILOG_SOURCES = timer.v
 
 include $(shell cocotb-config --makefiles)/Makefile.sim

@@ -1,13 +1,13 @@
 # Simple 16-bits timer peripheral
 
-Implements a time that can be used as a peripheral for a CPU implementation, intended to be used in a simple 8-bits CPU implementation to be sent for Tapeout with the [Dec 2023 Efabless shuttle](https://efabless.com/gf-180-open-mpw-shuttle-program)
+Implements a timer that can be used as a peripheral for a CPU implementation, intended to be used in a simple 8-bits CPU implementation to be sent for Tapeout with the [Dec 2023 Efabless shuttle](https://efabless.com/gf-180-open-mpw-shuttle-program)
 
 ## Inputs and Outputs description:
 
 - clk: input of CPU clock
 - enable: enables timer for operation
 - set: sets count value and configurations (direction and auto reload)
-- direction: sets the count direction, 0 is down, 1 us up
+- direction: sets the count direction, 0 is down, 1 is up
 - auto_reload: sets autoreload mode for the timer
 - done_ack: acknowledges done flag and sets it back to zero
 - count: 16-bits wide value to count
