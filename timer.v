@@ -18,11 +18,11 @@ module timer(
 	reg overflow = 0;
 	reg run = 0;
 
-	always @(posedge done_ack) begin
-		overflow <= 0;
-	end;
-
 	always @(posedge clk) begin
+		if (done_ack) begin
+			overflow <= 0;
+		end
+
 		if (enable) begin
 			if (set) begin
 				tmr_dir <= direction;

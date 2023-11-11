@@ -39,7 +39,7 @@ Run:
 make synth_timer
 ```
 
-and you should see a YoSys window opening showing the synthesis like this (as per 10Nov2023 this looks pretty weird):
+and you should see a YoSys window opening showing the synthesis like this:
 
 ![Timer module synthesis with YoSys](./img/synth.png "Timer YoSys Synthesis")
 

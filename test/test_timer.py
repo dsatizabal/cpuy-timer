@@ -63,10 +63,10 @@ async def done_ack_no_autoreload(dut):
     assert dut.done == 1, f"Expected DONE";
 
     dut.done_ack.value = 1
-    await ClockCycles(dut.clk, 1)
+    await ClockCycles(dut.clk, 2)
     dut.done_ack.value = 0
 
-    assert dut.done == 0, f"Expected NOT DONE";
+    assert dut.done == 0, f"Expected NOT DONE (after ack)";
 
 @cocotb.test()
 async def count_up_with_autoreload(dut):
@@ -88,7 +88,7 @@ async def count_up_with_autoreload(dut):
     assert dut.done == 1, f"Expected DONE";
 
     dut.done_ack.value = 1
-    await ClockCycles(dut.clk, 1)
+    await ClockCycles(dut.clk, 2)
     dut.done_ack.value = 0
 
     assert dut.done == 0, f"Expected NOT DONE ACK";
@@ -115,7 +115,7 @@ async def count_down_with_autoreload(dut):
     assert dut.done == 1, f"Expected DONE";
 
     dut.done_ack.value = 1
-    await ClockCycles(dut.clk, 1)
+    await ClockCycles(dut.clk, 2)
     dut.done_ack.value = 0
 
     assert dut.done == 0, f"Expected NOT DONE ACK";
