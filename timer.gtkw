@@ -1,0 +1,30 @@
+[*]
+[*] GTKWave Analyzer v3.4.0 (w)1999-2022 BSI
+[*] Mon Nov 13 12:07:39 2023
+[*]
+[dumpfile] "/home/dsatizabal/cpuy-timer/timer.vcd"
+[dumpfile_mtime] "Mon Nov 13 12:07:08 2023"
+[dumpfile_size] 3366
+[savefile] "/home/dsatizabal/cpuy-timer/timer.gtkw"
+[timestart] 0
+[size] 1920 1033
+[pos] -1 -1
+*-16.470301 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] tb.
+[sst_width] 276
+[signals_width] 142
+[sst_expanded] 1
+[sst_vpaned_height] 309
+@28
+tb.clk_tb
+tb.enable_tb
+tb.set_tb
+tb.direction_tb
+@22
+tb.count_tb[15:0]
+@28
+tb.done_tb
+@23
+tb.timer.counter[15:0]
+[pattern_trace] 1
+[pattern_trace] 0

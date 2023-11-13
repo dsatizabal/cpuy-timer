@@ -1,123 +1,144 @@
 import cocotb
 from cocotb.clock import Clock
-from cocotb.triggers import RisingEdge, ClockCycles
+from cocotb.triggers import Timer, ClockCycles
+
 
 @cocotb.test()
 async def normal_count_up_no_autoreload(dut):
-    clock = Clock(dut.clk, 10, "us")
+    clock = Clock(dut.clk_tb, 10, "us")
     cocotb.fork(clock.start())
 
-    dut.enable.value = 1
+    dut.enable_tb.value = 1
 
-    dut.direction.value = 1
-    dut.auto_reload.value = 0
-    dut.done_ack.value = 0
-    dut.count.value = 65530
-    dut.set.value = 1
-    await ClockCycles(dut.clk, 5)
-    dut.set.value = 0
+    dut.direction_tb.value = 1
+    dut.auto_reload_tb.value = 0
+    dut.done_ack_tb.value = 0
+    dut.count_tb.value = 65531 # Counts 5, transition from FFFFh to 0 counts
+    dut.set_tb.value = 1
+    await ClockCycles(dut.clk_tb, 5)
+    dut.set_tb.value = 0
 
-    assert dut.done == 0, f"Expected NOT DONE";
-    await ClockCycles(dut.clk, 20)
+    assert dut.done_tb == 0, f"Expected NOT DONE";
 
-    assert dut.done == 1, f"Expected DONE";
+    await ClockCycles(dut.clk_tb, 6)
+    # Required to have the propper results (propagation?), otherwise we'd require an additional clk cycle
+    await Timer(10, units="ns");
+    assert dut.done_tb == 1, f"Expected DONE";
 
 @cocotb.test()
 async def normal_count_down_no_autoreload(dut):
-    clock = Clock(dut.clk, 10, "us")
+    clock = Clock(dut.clk_tb, 10, "us")
     cocotb.fork(clock.start())
 
-    dut.enable.value = 1
+    dut.enable_tb.value = 1
 
-    dut.direction.value = 0
-    dut.auto_reload.value = 0
-    dut.done_ack.value = 0
-    dut.count.value = 5
-    dut.set.value = 1
-    await ClockCycles(dut.clk, 5)
-    dut.set.value = 0
+    dut.direction_tb.value = 0
+    dut.auto_reload_tb.value = 0
+    dut.done_ack_tb.value = 0
+    dut.count_tb.value = 5
+    dut.set_tb.value = 1
+    await ClockCycles(dut.clk_tb, 5)
+    dut.set_tb.value = 0
 
-    assert dut.done == 0, f"Expected NOT DONE";
-    await ClockCycles(dut.clk, 20)
-
-    assert dut.done == 1, f"Expected DONE";
+    assert dut.done_tb == 0, f"Expected NOT DONE";
+    await ClockCycles(dut.clk_tb, 6)
+    # Required to have the propper results (propagation?), otherwise we'd require an additional clk cycle
+    await Timer(10, units="ns");
+    assert dut.done_tb == 1, f"Expected DONE";
 
 @cocotb.test()
 async def done_ack_no_autoreload(dut):
-    clock = Clock(dut.clk, 10, "us")
+    clock = Clock(dut.clk_tb, 10, "us")
     cocotb.fork(clock.start())
 
-    dut.enable.value = 1
+    dut.enable_tb.value = 1
 
-    dut.direction.value = 1
-    dut.auto_reload.value = 0
-    dut.done_ack.value = 0
-    dut.count.value = 65530
-    dut.set.value = 1
-    await ClockCycles(dut.clk, 5)
-    dut.set.value = 0
+    dut.direction_tb.value = 1
+    dut.auto_reload_tb.value = 0
+    dut.done_ack_tb.value = 0
+    dut.count_tb.value = 65531
+    dut.set_tb.value = 1
+    await ClockCycles(dut.clk_tb, 5)
+    dut.set_tb.value = 0
 
-    assert dut.done == 0, f"Expected NOT DONE";
-    await ClockCycles(dut.clk, 20)
+    assert dut.done_tb == 0, f"Expected NOT DONE";
+    await ClockCycles(dut.clk_tb, 6)
+    # Required to have the propper results (propagation?), otherwise we'd require an additional clk cycle
+    await Timer(10, units="ns");
+    assert dut.done_tb == 1, f"Expected DONE";
 
-    assert dut.done == 1, f"Expected DONE";
+    dut.done_ack_tb.value = 1
+    await ClockCycles(dut.clk_tb, 1)
+    # Required to have the propper results (propagation?), otherwise we'd require an additional clk cycle
+    await Timer(10, units="ns");
+    dut.done_ack_tb.value = 0
 
-    dut.done_ack.value = 1
-    await ClockCycles(dut.clk, 2)
-    dut.done_ack.value = 0
-
-    assert dut.done == 0, f"Expected NOT DONE (after ack)";
+    assert dut.done_tb == 0, f"Expected NOT DONE (after ack)";
 
 @cocotb.test()
 async def count_up_with_autoreload(dut):
-    clock = Clock(dut.clk, 10, "us")
+    clock = Clock(dut.clk_tb, 10, "us")
     cocotb.fork(clock.start())
 
-    dut.enable.value = 1
+    dut.enable_tb.value = 1
 
-    dut.direction.value = 1
-    dut.auto_reload.value = 1
-    dut.done_ack.value = 0
-    dut.count.value = 65530
-    dut.set.value = 1
-    await ClockCycles(dut.clk, 5)
-    dut.set.value = 0
+    dut.direction_tb.value = 1
+    dut.auto_reload_tb.value = 1
+    dut.done_ack_tb.value = 0
+    dut.count_tb.value = 65531
+    dut.set_tb.value = 1
+    await ClockCycles(dut.clk_tb, 5)
+    dut.set_tb.value = 0
 
-    assert dut.done == 0, f"Expected NOT DONE";
-    await ClockCycles(dut.clk, 8)
-    assert dut.done == 1, f"Expected DONE";
+    assert dut.done_tb == 0, f"Expected NOT DONE";
+    await ClockCycles(dut.clk_tb, 6)
+    # Required to have the propper results (propagation?), otherwise we'd require an additional clk cycle
+    await Timer(10, units="ns");
+    assert dut.done_tb == 1, f"Expected DONE";
 
-    dut.done_ack.value = 1
-    await ClockCycles(dut.clk, 2)
-    dut.done_ack.value = 0
+    dut.done_ack_tb.value = 1
+    await ClockCycles(dut.clk_tb, 1)
+    # Required to have the propper results (propagation?), otherwise we'd require an additional clk cycle
+    await Timer(10, units="ns");
+    dut.done_ack_tb.value = 0
+    assert dut.done_tb == 0, f"Expected NOT DONE ACK";
 
-    assert dut.done == 0, f"Expected NOT DONE ACK";
-    await ClockCycles(dut.clk, 9)
-    assert dut.done == 1, f"Expected AR DONE";
+    await ClockCycles(dut.clk_tb, 5)
+    # Required to have the propper results (propagation?), otherwise we'd require an additional clk cycle
+    await Timer(10, units="ns");
+    assert dut.done_tb == 1, f"Expected AR DONE";
 
 @cocotb.test()
 async def count_down_with_autoreload(dut):
-    clock = Clock(dut.clk, 10, "us")
+    clock = Clock(dut.clk_tb, 10, "us")
     cocotb.fork(clock.start())
 
-    dut.enable.value = 1
+    dut.enable_tb.value = 1
 
-    dut.direction.value = 0
-    dut.auto_reload.value = 1
-    dut.done_ack.value = 0
-    dut.count.value = 5
-    dut.set.value = 1
-    await ClockCycles(dut.clk, 5)
-    dut.set.value = 0
+    dut.direction_tb.value = 0
+    dut.auto_reload_tb.value = 1
+    dut.done_ack_tb.value = 0
+    dut.count_tb.value = 5
+    dut.set_tb.value = 1
+    await ClockCycles(dut.clk_tb, 5)
+    dut.set_tb.value = 0
 
-    assert dut.done == 0, f"Expected NOT DONE";
-    await ClockCycles(dut.clk, 7)
-    assert dut.done == 1, f"Expected DONE";
+    assert dut.done_tb == 0, f"Expected NOT DONE";
 
-    dut.done_ack.value = 1
-    await ClockCycles(dut.clk, 2)
-    dut.done_ack.value = 0
+    await ClockCycles(dut.clk_tb, 6)
+    # Required to have the propper results (propagation?), otherwise we'd require an additional clk cycle
+    await Timer(10, units="ns");
 
-    assert dut.done == 0, f"Expected NOT DONE ACK";
-    await ClockCycles(dut.clk, 7)
-    assert dut.done == 1, f"Expected AR DONE";
+    assert dut.done_tb == 1, f"Expected DONE";
+
+    dut.done_ack_tb.value = 1
+    await ClockCycles(dut.clk_tb, 1)
+    # Required to have the propper results (propagation?), otherwise we'd require an additional clk cycle
+    await Timer(10, units="ns");
+    dut.done_ack_tb.value = 0
+
+    assert dut.done_tb == 0, f"Expected NOT DONE ACK";
+    await ClockCycles(dut.clk_tb, 5)
+    # Required to have the propper results (propagation?), otherwise we'd require an additional clk cycle
+    await Timer(10, units="ns");
+    assert dut.done_tb == 1, f"Expected AR DONE";

@@ -1,5 +1,6 @@
 # cocotb setup
-MODULE = timer
+MODULE = test.test_timer
+export MODULE
 TOPLEVEL = timer
 VERILOG_SOURCES = timer.v
 
@@ -11,12 +12,12 @@ synth_timer:
 test_timer:
 	rm -rf sim_build/
 	mkdir sim_build/
-	iverilog -o sim_build/sim.vvp -s timer -s dump -g2012 dump_timer.v timer.v
-	PYTHONOPTIMIZE=${NOASSERT} MODULE=test.test_timer vvp -M $$(cocotb-config --prefix)/cocotb/libs -m libcocotbvpi_icarus sim_build/sim.vvp
+	iverilog -o sim_build/sim.vvp -s tb -s dump -g2012 dump_timer.v timer.v tb.v
+	PYTHONOPTIMIZE=${NOASSERT} vvp -M $$(cocotb-config --prefix)/cocotb/libs -m libcocotbvpi_icarus sim_build/sim.vvp
 	! grep failure results.xml
 
 gtkwave_timer:
-	gtkwave timer.vcd
+	gtkwave timer.vcd timer.gtkw
 
 formal_timer:
 	sby -f timer.sby

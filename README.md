@@ -67,9 +67,7 @@ a GtkWave window will open, you should see the hierarchy of the timer containing
 
 ![GtkWave results for timer module](./img/gtkwave.png "GtkWave: timer module")
 
-observe that for this case we're not using a verilog testbench but rather we're testing directly (Design Under Test or DUT for CocoTB) the corresponding modules.
-
-As per 10Nov2023 the timer is having a malfunction that detects the overflow with a clock cycle delay.
+observe that we're using a verilog testbench (Design Under Test or DUT for CocoTB) defined in the [tb.v](./tb.v) file, this instantiates the time and wires the corresponding signals, the tb is actually the module that is tested with CocoTB.
 
 ## Running Formal Verification:
 
